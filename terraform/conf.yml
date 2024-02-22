@@ -1,0 +1,6 @@
+#cloud-config to-do
+users:
+  - name: cloud
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCypMmB8qTqZ3/jebyRtlwKgei0YEtbSQjEoqhyFcxQinhG5SzuTcBtFh7bApHJrKu/iTUZ6BEVf9lmMbqSQl+uAK8d6JE7uyN8EVcrSNsS5SBHW8q1GGd3B2kRMDG0QOzC7akNxFEedQ9ezZZ5vea+3fDegTi4bRiagua0SSmgxxHuYZDVRuweGkBhW3fZxaj02zO1jQfz07OFIyBPElAHOTqslpU3zknJ/2qAlbGK0yIk+H6VmrXLcPu0H1M6MpueW1er75wZdt+HivuRRca6lGEIuAQtI+BTq7ZBuDRsebA1pA8jeFOe1BNOBjS6VPqV3Rqj1kTfEoQdLXBBmFAYKfcWoA5Pmj3wcD7CfrpzVu5LCiDeeipQYBWbd8QxqcPQ/2AiDF8KWC4cmuIPtk8LS29SDhMji/3EwiaQLsg7bkxOYLPBarTljQUx8DgBWyWDags3jLaZjn+wloXHGwK8Jg4Z9JqKB5B0tD7b4zsx5/Xf0b/4GaUVl1ojhk6hQm0CwMNqw7XohS62Vr/yg+2maP7k/oFPOigBKYYvH2Oq+7fZgcsizgDBUvOHasS/71FCGGJKMcKLfwYbrDMZLhveGCrBmYmY6mhPVVSIi8qxJyB+ngn3tnxTbxNI3B4PZQ//Cf5YBGKHub41LHDpqyDVxqmrSrG9eZNX2RtdgznxCw== ayoub@ayoub-TUF-Gaming-FX505GE-FX505GE
+    sudo: ALL=(ALL) NOPASSWD:ALL
