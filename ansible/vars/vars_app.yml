@@ -1,0 +1,6 @@
+git_repo_url: "https://git.forestier.re/uca/2022-2023/devops-m1/tp-not/code-tp-note"
+git_repo_dest: "/home/code-tp-note"
+
+required_packages:
+  - name: git
+  - name: golang
