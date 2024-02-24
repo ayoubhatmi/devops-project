@@ -32,6 +32,9 @@
     # - name: Start the server
     #  command: "{{ git_repo_dest }}/app"
     # become: true
+    # Commented this task becasue it blocks the playbook execution
+    # (it run in the foreground, occupying the terminal session,
+    # and preventing Ansible from proceeding.)
 
     - name: Start MariaDB
       ansible.builtin.service:
