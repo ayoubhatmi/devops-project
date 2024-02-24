@@ -4,3 +4,15 @@ git_repo_dest: "/home/code-tp-note"
 required_packages:
   - name: git
   - name: golang
+  - name: mariadb-server
+  - name: python3-mysqldb
+
+mysql_databases:
+  - db_alpha
+  - db_beta
+
+mysql_users:
+  - name: "alpha"
+    password: "alpha"
+  - name: "beta"
+    password: "beta"
