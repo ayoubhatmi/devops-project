@@ -13,6 +13,4 @@ mysql_databases:
 
 mysql_users:
   - name: "alpha"
-    password: "alpha"
   - name: "beta"
-    password: "beta"

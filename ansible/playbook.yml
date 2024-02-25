@@ -5,6 +5,10 @@
   vars_files:
     - "vars/vars_app.yml"
   tasks:
+    - name: include vault
+      ansible.builtin.include_vars:
+        file: "vars/vars_secrets.yml"
+
     - name: set nameservers
       become: true
       ansible.builtin.lineinfile:
@@ -51,7 +55,7 @@
     - name: "Create MariaDB users"
       mysql_user:
         name: "{{ item.name }}"
-        password: "{{ item.password }}"
+        password: "{{ lookup('vars', item.name + '_password') }}"
         priv: "*.*:ALL"
         host: "%"
         login_unix_socket: /var/run/mysqld/mysqld.sock
