@@ -22,3 +22,14 @@ resource "openstack_compute_floatingip_associate_v2" "fip_1" {
   floating_ip = openstack_networking_floatingip_v2.fip_1.address
   instance_id = openstack_compute_instance_v2.my-instance.id
 }
+
+resource "openstack_blockstorage_volume_v2" "database_volume" {
+  name = "database-volume"
+  size = 1 
+}
+
+resource "openstack_compute_volume_attach_v2" "attach_volume" {
+  instance_id = openstack_compute_instance_v2.my-instance.id
+  volume_id   = openstack_blockstorage_volume_v2.database_volume.id
+  device      = "/dev/vdb" 
+}

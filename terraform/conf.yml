@@ -1,4 +1,3 @@
-#cloud-config to-do
 users:
   - name: cloud
     ssh_authorized_keys:
