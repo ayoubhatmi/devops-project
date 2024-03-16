@@ -60,3 +60,37 @@
         host: "%"
         login_unix_socket: /var/run/mysqld/mysqld.sock
       loop: "{{ mysql_users }}"
+
+    - name: Ensure Docker service is started and enabled
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Ensure Docker Compose is executable
+      ansible.builtin.file:
+        path: /usr/local/bin/docker-compose
+        mode: u+x
+        owner: root
+        group: root
+        state: link
+        src: /usr/bin/docker-compose
+
+    - name: Ensure destination directory exists
+      ansible.builtin.file:
+        path: /var/www/docker-compose # Adjust this to the correct destination directory
+        state: directory
+        mode: "0755"
+
+    - name: Copy docker-compose.yml to the target machine
+      ansible.builtin.copy:
+        src: "../docker-compose/docker-compose.yml"
+        dest: "/var/www/docker-compose/docker-compose.yml"
+        mode: "0644"
+
+    - name: Deploy WordPress and MariaDB Containers
+      community.docker.docker_compose:
+        project_src: "/var/www/docker-compose/"
+        state: present
+        build: yes
+        restarted: yes

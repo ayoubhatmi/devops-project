@@ -6,6 +6,8 @@ required_packages:
   - name: golang
   - name: mariadb-server
   - name: python3-mysqldb
+  - name: docker
+  - name: docker-compose
 
 mysql_databases:
   - db_alpha
