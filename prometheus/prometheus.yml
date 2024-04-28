@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "traefik"
+    static_configs:
+      - targets: ["traefik:8080"]
+
+  - job_name: "nextcloud"
+    static_configs:
+      - targets: ["nextcloud:80"]
+
+  - job_name: "wordpress"
+    static_configs:
+      - targets: ["wordpress:80"]
