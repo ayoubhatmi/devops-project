@@ -21,46 +21,6 @@
         state: present
       loop: "{{ required_packages }}"
 
-    - name: Clone Remote Git Repository
-      ansible.builtin.git:
-        repo: "{{ git_repo_url }}"
-        dest: "{{ git_repo_dest }}"
-      register: git_clone
-      ignore_errors: true
-
-    - name: Go mod download and build
-      command: >
-        bash -c "cd {{ git_repo_dest }} && go mod download && go build -o ./app ./cmd"
-      become: true
-
-    # - name: Start the server
-    #  command: "{{ git_repo_dest }}/app"
-    # become: true
-    # Commented this task becasue it blocks the playbook execution
-    # (it run in the foreground, occupying the terminal session,
-    # and preventing Ansible from proceeding.)
-
-    - name: Start MariaDB
-      ansible.builtin.service:
-        name: mariadb
-        state: started
-        enabled: yes
-
-    - name: "Create MariaDB databases"
-      mysql_db:
-        name: "{{ item }}"
-        login_unix_socket: /var/run/mysqld/mysqld.sock #Connecting using socket because we don't have a user
-      loop: "{{ mysql_databases }}"
-
-    - name: "Create MariaDB users"
-      mysql_user:
-        name: "{{ item.name }}"
-        password: "{{ lookup('vars', item.name + '_password') }}"
-        priv: "*.*:ALL"
-        host: "%"
-        login_unix_socket: /var/run/mysqld/mysqld.sock
-      loop: "{{ mysql_users }}"
-
     - name: Ensure Docker service is started and enabled
       ansible.builtin.service:
         name: docker
@@ -78,7 +38,7 @@
 
     - name: Ensure destination directory exists
       ansible.builtin.file:
-        path: /var/www/docker-compose # Adjust this to the correct destination directory
+        path: /var/www/docker-compose
         state: directory
         mode: "0755"
 
@@ -88,7 +48,16 @@
         dest: "/var/www/docker-compose/docker-compose.yml"
         mode: "0644"
 
-    - name: Deploy WordPress and MariaDB Containers
+    - name: Create letsencrypt directory
+      file:
+        path: /var/www/docker-compose/letsencrypt
+        state: directory
+
+    - name: Create traefik_default network
+      docker_network:
+        name: traefik_default
+
+    - name: Deploy Docker Containers
       community.docker.docker_compose:
         project_src: "/var/www/docker-compose/"
         state: present

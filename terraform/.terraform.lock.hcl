@@ -1,7 +1,28 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/terraform-providers/openstack" {
+provider "registry.terraform.io/ovh/ovh" {
+  version     = "0.42.0"
+  constraints = "0.42.0"
+  hashes = [
+    "h1:6aKtJc5X959xbI3cxWYyIKOp3ogrKKa/1FMZRGib9BY=",
+    "zh:0c909386f7d5f70ad4104c1fa8bc2cf87f622cae87c60413a0c47d962ca63dfa",
+    "zh:101ace3a7d5a79543e6be087421b514053d4e78878d7151acfa5a95a7cc2da22",
+    "zh:1b96b651cc902c354ba7bc5503df308ad05e89d1075a859f893634fc3c2680c7",
+    "zh:4cef888851b6639217a824749e9bf51c1f4694664ca4ad993965737aedf8e3a5",
+    "zh:5206668880b49684c908677dd75db36bac43e30660c9561ec035dd2e5ec3b05d",
+    "zh:89bcb0c65fce6ddfa3f883de1e1bb273986a8fc47e620b1c08825f93baab11cb",
+    "zh:a528292cb52c62dbceb501a50b7d080ededb2af1c874a6eef8d7ecfd2960d5bd",
+    "zh:b111ca076ebc5551f1182a602c154a744c3b9c7c77d43762089bb1d90534d34d",
+    "zh:c2dd04edb69c2db0325f887e5e61beb1dab38d143313e9ec40d9ab8ffb48a85b",
+    "zh:da6d6bf4c363bc2c6b2e18debc48128d2026cc0a002949af7d45e879d2b696f4",
+    "zh:e771d8a0669ee2c67240f10c27fe5868dce01a12635e6f3ef96161b5ada635a5",
+    "zh:e9960bda2c2f912c9dd68e6e1e3b24ca882867811fc6c5b40a20340bb9adfaee",
+    "zh:f285a541f0452c081422e2a243b4c1ccc3e42675d6a9c94d0c0cc5710dcf22ef",
+  ]
+}
+
+provider "registry.terraform.io/terraform-provider-openstack/openstack" {
   version = "1.54.1"
   hashes = [
     "h1:5Jx4fbV+K20TnWaWwfHaz5913YGMQ5H+vaNpw8BdInE=",

@@ -1,42 +1,61 @@
-version: "3.1"
+version: "3"
 
 services:
-  wordpress:
-    image: wordpress:latest
+  traefik:
+    image: "traefik:v2.5"
+    container_name: "traefik"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.email=your_email@example.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
     ports:
-      - "8000:80"
-    environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress_password
-      WORDPRESS_DB_NAME: wordpress
+      - "80:80"
+      - "443:443" # HTTPS port
+      - "8080:8080" # Traefik dashboard (optional)
     volumes:
-      - wordpress_data:/var/www/html
-    depends_on:
-      - db
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt" # Ensure this directory exists and is writable by Traefik
 
   nextcloud:
-    image: nextcloud:latest
-    ports:
-      - "8080:80"
-    volumes:
-      - nextcloud_data:/var/www/html
-    depends_on:
-      - db
+    image: nextcloud
+    container_name: nextcloud
+    restart: always
     environment:
-      MYSQL_HOST: db
-      MYSQL_DATABASE: nextcloud
-      MYSQL_USER: nextcloud
-      MYSQL_PASSWORD: nextcloud_password
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=your_password
+    volumes:
+      - nextcloud:/var/www/html
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloud.rule=Host(`cloud.ayoub.uca-devops.ovh`)"
+      - "traefik.http.routers.nextcloud.entrypoints=websecure"
+      - "traefik.http.routers.nextcloud.tls=true"
+      - "traefik.http.routers.nextcloud.tls.certresolver=myresolver"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
 
   db:
-    image: mariadb:latest
+    image: mariadb
+    container_name: mariadb
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: mariadb_root_password
+      - MYSQL_ROOT_PASSWORD=your_root_password
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=your_password
     volumes:
-      - db_data:/var/lib/mysql
+      - db:/var/lib/mysql
 
 volumes:
-  wordpress_data:
-  nextcloud_data:
-  db_data:
+  nextcloud:
+  db:
+
+networks:
+  default:
+    external:
+      name: traefik_default
