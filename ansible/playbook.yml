@@ -21,6 +21,25 @@
         state: present
       loop: "{{ required_packages }}"
 
+    - name: Clone Remote Git Repository
+      ansible.builtin.git:
+        repo: "{{ git_repo_url }}"
+        dest: "{{ git_repo_dest }}"
+      register: git_clone
+      ignore_errors: true
+
+    - name: Go mod download and build
+      command: >
+        bash -c "cd {{ git_repo_dest }} && go mod download && go build -o ./app ./cmd"
+      become: true
+
+    # - name: Start the server
+    #  command: "{{ git_repo_dest }}/app"
+    # become: true
+    # Commented this task becasue it blocks the playbook execution
+    # (it run in the foreground, occupying the terminal session,
+    # and preventing Ansible from proceeding.)
+
     - name: Start MariaDB
       ansible.builtin.service:
         name: mariadb
@@ -63,6 +82,12 @@
         state: directory
         mode: "0755"
 
+    #- name: Copy go app to the target machine
+    # ansible.builtin.copy:
+    #  src: "../go-app"
+    # dest: "/var/www/docker-compose/go-app"
+    #mode: "0644"
+
     - name: Copy docker-compose.yml to the target machine
       ansible.builtin.copy:
         src: "../docker-compose/docker-compose.yml"
@@ -73,10 +98,6 @@
       file:
         path: /var/www/docker-compose/letsencrypt
         state: directory
-
-    #- name: Create Docker network
-    #  ansible.builtin.command:
-    #    cmd: docker network create internal
 
     - name: Deploy Docker Containers
       community.docker.docker_compose:
