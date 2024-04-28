@@ -1,9 +1,11 @@
 # devops-project
 
-## Nextcloud available on : https://blog.ayoub.uca-devops.ovh/
+## Nextcloud available on : https://cloud.ayoub.uca-devops.ovh/
 
 ## Wordpress available on : https://blog.ayoub.uca-devops.ovh/
 
+
+## Verify Databeses and users creation:
 ##### Access Mysql Command Line:
 
 ```sql
