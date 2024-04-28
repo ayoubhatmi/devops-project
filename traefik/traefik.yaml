@@ -1,0 +1,22 @@
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    watch: true
+    exposedByDefault: true
+    swarmMode: false
+
+entryPoints:
+  insecure:
+    address: ":80"
+  secure:
+    address: ":443"
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: "noreply@forestier.re"
+      storage: "/acme.json"
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      keyType: "EC256"
+      httpChallenge:
+        entryPoint: "insecure"

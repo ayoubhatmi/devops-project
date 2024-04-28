@@ -53,9 +53,9 @@
         path: /var/www/docker-compose/letsencrypt
         state: directory
 
-    - name: Create traefik_default network
-      docker_network:
-        name: traefik_default
+    #- name: Create Docker network
+    #  ansible.builtin.command:
+    #    cmd: docker network create internal
 
     - name: Deploy Docker Containers
       community.docker.docker_compose:
