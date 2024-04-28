@@ -1,12 +1,12 @@
 # devops-project
 
-## Nextcloud available on : https://cloud.ayoub.uca-devops.ovh/
+### Nextcloud available on : https://cloud.ayoub.uca-devops.ovh/
 
-## Wordpress available on : https://blog.ayoub.uca-devops.ovh/
+### Wordpress available on : https://blog.ayoub.uca-devops.ovh/
 
-## Go app : http://185.34.141.134:8000
+### Go app : http://185.34.141.134:8000
 
-## Traefik Dashboard : http://185.34.141.134:8080
+### Traefik Dashboard : http://185.34.141.134:8080
 
 ## Verify Databeses and users creation:
 ##### Access Mysql Command Line:
