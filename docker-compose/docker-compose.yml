@@ -44,10 +44,10 @@ services:
     container_name: wordpress
     restart: always
     environment:
-      - WORDPRESS_DB_HOST=db
-      - WORDPRESS_DB_NAME=wordpress
-      - WORDPRESS_DB_USER=wordpress
-      - WORDPRESS_DB_PASSWORD=your_wordpress_password
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=your_password
     volumes:
       - wordpress:/var/www/html
     labels:
@@ -64,9 +64,7 @@ services:
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=your_root_password
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=your_wordpress_password
+      - MYSQL_DATABASE=mariadb
     volumes:
       - db:/var/lib/mysql
 

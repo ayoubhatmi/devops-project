@@ -1,3 +1,13 @@
 required_packages:
   - name: docker
   - name: docker-compose
+  - name: mariadb-server
+  - name: python3-mysqldb
+
+mysql_databases:
+  - db_beta
+  - db_alpha
+
+mysql_users:
+  - name: "beta"
+  - name: "alpha"

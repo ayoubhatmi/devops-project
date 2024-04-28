@@ -21,6 +21,27 @@
         state: present
       loop: "{{ required_packages }}"
 
+    - name: Start MariaDB
+      ansible.builtin.service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: "Create MariaDB databases"
+      mysql_db:
+        name: "{{ item }}"
+        login_unix_socket: /var/run/mysqld/mysqld.sock #Connecting using socket because we don't have a user
+      loop: "{{ mysql_databases }}"
+
+    - name: "Create MariaDB users"
+      mysql_user:
+        name: "{{ item.name }}"
+        password: "{{ lookup('vars', item.name + '_password') }}"
+        priv: "*.*:ALL"
+        host: "%"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+      loop: "{{ mysql_users }}"
+
     - name: Ensure Docker service is started and enabled
       ansible.builtin.service:
         name: docker
